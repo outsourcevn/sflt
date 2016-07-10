@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="xe63Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="list">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="F1" Type="nvarchar" MaxLength="2555" />
+          <Property Name="F2" Type="nvarchar" MaxLength="2555" />
+          <Property Name="F3" Type="nvarchar" MaxLength="2555" />
+          <Property Name="F4" Type="nvarchar" MaxLength="2505" />
+          <Property Name="F5" Type="nvarchar" MaxLength="2505" />
+          <Property Name="F6" Type="nvarchar" MaxLength="2505" />
+          <Property Name="F7" Type="nvarchar" MaxLength="2505" />
+          <Property Name="F8" Type="nvarchar" MaxLength="2505" />
+          <Property Name="F9" Type="nvarchar" MaxLength="2505" />
+          <Property Name="F10" Type="nvarchar" MaxLength="2505" />
+          <Property Name="F11" Type="nvarchar" MaxLength="2505" />
+          <Property Name="F12" Type="ntext" />
+          <Property Name="F13" Type="nvarchar" MaxLength="2505" />
+          <Property Name="F14" Type="ntext" />
+          <Property Name="F15" Type="ntext" />
+          <Property Name="F16" Type="ntext" />
+          <Property Name="F17" Type="int" />
+          <Property Name="F18" Type="ntext" />
+          <Property Name="F19" Type="ntext" />
+          <Property Name="F20" Type="ntext" />
+          <Property Name="F21" Type="ntext" />
+          <Property Name="F22" Type="ntext" />
+          <Property Name="F23" Type="ntext" />
+          <Property Name="F24" Type="ntext" />
+          <Property Name="F25" Type="ntext" />
+          <Property Name="rank" Type="int" />
+        </EntityType>
+        <EntityType Name="listprovince">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="251" />
+        </EntityType>
+        <EntityType Name="log">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="F2" Type="nvarchar" MaxLength="50" />
+          <Property Name="F3" Type="nvarchar" MaxLength="50" />
+          <Property Name="total" Type="int" />
+        </EntityType>
+        <EntityContainer Name="xe63ModelStoreContainer">
+          <EntitySet Name="list" EntityType="Self.list" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="listprovince" EntityType="Self.listprovince" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="log" EntityType="Self.log" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="xe63Model" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="xe63Entities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="listprovinces" EntityType="xe63Model.listprovince" />
+          <EntitySet Name="lists" EntityType="xe63Model.list" />
+          <EntitySet Name="logs" EntityType="xe63Model.log" />
+        </EntityContainer>
+        <EntityType Name="listprovince">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="name" MaxLength="251" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="list">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="F1" MaxLength="2555" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="F2" MaxLength="2555" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="F3" MaxLength="2555" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="F4" MaxLength="2505" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="F5" MaxLength="2505" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="F6" MaxLength="2505" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="F7" MaxLength="2505" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="F8" MaxLength="2505" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="F9" MaxLength="2505" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="F10" MaxLength="2505" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="F11" MaxLength="2505" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="F12" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="F13" MaxLength="2505" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="F14" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="F15" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="F16" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="F17" />
+          <Property Type="String" Name="F18" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="F19" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="F20" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="F21" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="F22" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="F23" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="F24" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="F25" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="rank" />
+        </EntityType>
+        <EntityType Name="log">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="F2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="F3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="total" Type="Int32" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="xe63ModelStoreContainer" CdmEntityContainer="xe63Entities">
+          <EntitySetMapping Name="listprovinces">
+            <EntityTypeMapping TypeName="xe63Model.listprovince">
+              <MappingFragment StoreEntitySet="listprovince">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lists">
+            <EntityTypeMapping TypeName="xe63Model.list">
+              <MappingFragment StoreEntitySet="list">
+                <ScalarProperty Name="rank" ColumnName="rank" />
+                <ScalarProperty Name="F25" ColumnName="F25" />
+                <ScalarProperty Name="F24" ColumnName="F24" />
+                <ScalarProperty Name="F23" ColumnName="F23" />
+                <ScalarProperty Name="F22" ColumnName="F22" />
+                <ScalarProperty Name="F21" ColumnName="F21" />
+                <ScalarProperty Name="F20" ColumnName="F20" />
+                <ScalarProperty Name="F19" ColumnName="F19" />
+                <ScalarProperty Name="F18" ColumnName="F18" />
+                <ScalarProperty Name="F17" ColumnName="F17" />
+                <ScalarProperty Name="F16" ColumnName="F16" />
+                <ScalarProperty Name="F15" ColumnName="F15" />
+                <ScalarProperty Name="F14" ColumnName="F14" />
+                <ScalarProperty Name="F13" ColumnName="F13" />
+                <ScalarProperty Name="F12" ColumnName="F12" />
+                <ScalarProperty Name="F11" ColumnName="F11" />
+                <ScalarProperty Name="F10" ColumnName="F10" />
+                <ScalarProperty Name="F9" ColumnName="F9" />
+                <ScalarProperty Name="F8" ColumnName="F8" />
+                <ScalarProperty Name="F7" ColumnName="F7" />
+                <ScalarProperty Name="F6" ColumnName="F6" />
+                <ScalarProperty Name="F5" ColumnName="F5" />
+                <ScalarProperty Name="F4" ColumnName="F4" />
+                <ScalarProperty Name="F3" ColumnName="F3" />
+                <ScalarProperty Name="F2" ColumnName="F2" />
+                <ScalarProperty Name="F1" ColumnName="F1" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="logs">
+            <EntityTypeMapping TypeName="xe63Model.log">
+              <MappingFragment StoreEntitySet="log">
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="F3" ColumnName="F3" />
+                <ScalarProperty Name="F2" ColumnName="F2" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

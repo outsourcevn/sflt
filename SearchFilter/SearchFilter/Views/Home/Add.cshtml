@@ -1,0 +1,114 @@
+﻿@{
+    ViewBag.Title = "Add";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Thêm dữ liệu nhà xe</h2>
+<div id="tf-blog" class="blog-post" style="width:100%;text-align:center;">
+    <table style="width:100%;">
+        <tr id="headertb"></tr>
+        <tr id="data"></tr>
+    </table>
+    <button type="button" class="btn btn-primary" onclick="add();" >Thêm Mới</button>
+</div>
+<div id="list">
+    <h4 style="text-align:center;"><a href="/List/Index" target="_blank">DANH SÁCH NHÀ XE</a></h4>
+    @*<table style="width:100%;">
+        <tr><th>Tỉnh đi</th><th>Tỉnh đến</th><th>Loại hình xe</th><th>Tên nhà xe</th><th></th></tr>
+        <tr id="listitem"></tr>
+    </table>*@
+</div>
+<script>
+    var F = ["", "", "Tỉnh đi", "Tỉnh đến", "Loại hình xe", "", "", "Điểm đi", "Điểm đến", "Thời gian", "Đón trả", "Loại xe", "", "Tên nhà xe", "Số điện thoại", "Giờ chạy", "Diễn giải", "Giá vé", "Tiện ích", "Ghi chú"];
+    var header = "";
+    var data = "";
+    for (var i = 1; i <= 19; i++) {
+        if (F[i] == "") continue;
+        header += "<th>" + F[i] + "</th>";
+        data += "<td><textarea id=F" + i + " cols=6 rows=10></textarea>";
+    }
+    $("#headertb").html(header);
+    $("#data").html(data);
+    function add() {
+        var formdata = new FormData(); //FormData object
+        //alert(document.getElementById("F2").value);
+        //return;
+        if (document.getElementById("F2").value == "") {
+            alert("Nhập tỉnh đi!");
+            document.getElementById("F2").focus();
+            return;
+        }
+        if (document.getElementById("F3").value == "") {
+            alert("Nhập tỉnh đến!");
+            document.getElementById("F3").focus();
+            return;
+        }
+        if (document.getElementById("F4").value == "") {
+            alert("Nhập Loại hình xe!");
+            document.getElementById("F4").focus();
+            return;
+        }
+        if (document.getElementById("F17").value == "") {
+            alert("Nhập giá vé!");
+            document.getElementById("F17").focus();
+            return;
+        } else {
+            if (isNaN(document.getElementById("F17").value)) {
+                alert("Nhập giá vé dạng số!");
+                document.getElementById("F17").focus();
+                return;
+            }
+        }
+        for (var i = 1; i <= 19; i++) {
+            if (document.getElementById("F" + i)) formdata.append("F" + i, document.getElementById("F" + i).value);
+        }
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/Home/AddNew');
+        xhr.send(formdata);
+        var content = "";
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                if (xhr.responseText == "1") {
+                    alert("Cập nhật thành công");
+                    
+                    //window.location.href = "/Photos/User/1";
+                } else {
+                    alert("Chương trình đang cập nhật, xin quay lại sau!");
+                }
+            }
+        }
+    }
+    function itemlist() {
+        var formdata = new FormData(); //FormData object
+        //formdata.append("id", id);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/Home/getList');
+        xhr.send(formdata);
+        var content = "";
+        $("#loadingimage").show();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                if (xhr.responseText != "") {
+                    //alert("Cập nhật thành công");
+                    //window.location.href = "/Photos/User/1";
+                    var news = '{"news":' + xhr.responseText + '}';
+                    var json_parsed = $.parseJSON(news);
+                    var content = "";
+                    for (var i = 0; i < json_parsed.news.length; i++) {
+                        var F2 = json_parsed.news[i].F2;
+                        var F3 = json_parsed.news[i].F3;
+                        var F4 = json_parsed.news[i].F4;
+                        var F13 = json_parsed.news[i].F13;
+                        var id = json_parsed.news[i].id;
+                        content += "<tr><td>" + F2 + "</td>" + "<td>" + F3 + "</td>" + "<td>" + F4 + "</td>" + "<td>" + F13 + "</td>" + "<td><span onclick=\"edit(" + id + ");\">Sửa</span>-<span onclick=\"del(" + id + ");\">Xóa</span></td></tr>";
+                    }
+                    $("#loadingimage").hide();
+                    $("#listitem").html(content);
+                } else {
+                    alert("Chương trình đang cập nhật, xin quay lại sau!");
+                }
+            }
+        }
+    }
+    //itemlist();
+</script>

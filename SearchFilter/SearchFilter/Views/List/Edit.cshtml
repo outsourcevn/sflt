@@ -1,0 +1,163 @@
+﻿@model SearchFilter.Models.list
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    input {
+    width: 100%;
+    box-sizing:border-box;
+    border:1px solid #ffd800;
+}
+    .editor-label {
+        font-weight:bold;
+    }
+</style>
+<h2>Sửa</h2>
+<div id="tf-blog" class="blog-post" style="width:100%;text-align:center;">
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Sửa thông tin nhà xe</legend>
+
+        @Html.HiddenFor(model => model.id)
+
+        
+
+        <div class="editor-label">
+            Tỉnh đi
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.F2)
+            @Html.ValidationMessageFor(model => model.F2)
+        </div>
+
+        <div class="editor-label">
+            Tỉnh đến
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.F3)
+            @Html.ValidationMessageFor(model => model.F3)
+        </div>
+
+        <div class="editor-label">
+            Loại hình xe
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.F4)
+            @Html.ValidationMessageFor(model => model.F4)
+        </div>
+
+        <div class="editor-label">
+            Điểm đi
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.F7)
+            @Html.ValidationMessageFor(model => model.F7)
+        </div>
+
+        <div class="editor-label">
+            Điểm đến
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.F8)
+            @Html.ValidationMessageFor(model => model.F8)
+        </div>
+
+        <div class="editor-label">
+            Thời gian
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.F9)
+            @Html.ValidationMessageFor(model => model.F9)
+        </div>
+
+        <div class="editor-label">
+            Đón trả
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.F10)
+            @Html.ValidationMessageFor(model => model.F10)
+        </div>
+
+        <div class="editor-label">
+            Loại xe
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.F11)
+            @Html.ValidationMessageFor(model => model.F11)
+        </div>
+        <div class="editor-label">
+            Tên nhà xe
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.F13)
+            @Html.ValidationMessageFor(model => model.F13)
+        </div>
+
+        <div class="editor-label">
+            Số điện thoại
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.F14)
+            @Html.ValidationMessageFor(model => model.F14)
+        </div>
+
+        <div class="editor-label">
+            Giờ chạy
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.F15)
+            @Html.ValidationMessageFor(model => model.F15)
+        </div>
+
+        <div class="editor-label">
+            Diễn giải
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.F16)
+            @Html.ValidationMessageFor(model => model.F16)
+        </div>
+
+        <div class="editor-label">
+            Giá vé
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.F17)
+            @Html.ValidationMessageFor(model => model.F17)
+        </div>
+
+        <div class="editor-label">
+            Tiện ích
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.F18)
+            @Html.ValidationMessageFor(model => model.F18)
+        </div>
+
+        <div class="editor-label">
+            Ghi chú
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.F19)
+            @Html.ValidationMessageFor(model => model.F19)
+        </div>
+        <div class="editor-label">
+            Thứ tự xếp hạng(càng nhỏ càng quan trọng)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.rank)
+            @Html.ValidationMessageFor(model => model.rank)
+        </div>
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+</div>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+

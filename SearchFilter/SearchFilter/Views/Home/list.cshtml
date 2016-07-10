@@ -1,0 +1,490 @@
+﻿@*@model IEnumerable<SearchFilter.Models.list>*@
+@model PagedList.IPagedList<SearchFilter.Models.list>
+@using PagedList.Mvc; 
+@{
+    ViewBag.Title = "Đặt mua vé xe khách đi " + ViewBag.from + "-" + ViewBag.to;
+    if (ViewBag.type != null && ViewBag.type != "")
+    {
+        ViewBag.Title += "-" + ViewBag.type;
+    }
+    if (ViewBag.f13 != null && ViewBag.f13 != "")
+    {
+        ViewBag.Title += "-" + ViewBag.f13;
+    }
+    if (ViewBag.f7 != null && ViewBag.f7 != "")
+    {
+        ViewBag.Title += "-" + ViewBag.f7;
+    }
+    if (ViewBag.f8 != null && ViewBag.f8 != "")
+    {
+        ViewBag.Title += "-" + ViewBag.f8;
+    }
+    if (ViewBag.f9 != null && ViewBag.f9 != "")
+    {
+        ViewBag.Title += "-" + ViewBag.f9;
+    }
+    if (ViewBag.f10 != null && ViewBag.f10 != "")
+    {
+        ViewBag.Title += "-" + ViewBag.f10;
+    }
+    if (ViewBag.f11 != null && ViewBag.f11 != "")
+    {
+        ViewBag.Title += "-" + ViewBag.f11;
+    }
+    //ViewBag.Title += " giá tốt nhất";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string allFilter = ViewBag.from + "-" + ViewBag.to + "-" + ViewBag.type + "-" + ViewBag.f13 + "-" + ViewBag.f7 + "-" + ViewBag.f8 + "-" + ViewBag.f9 + "-" + ViewBag.f10 + "-" + ViewBag.f11;
+}
+<!--  Blog Section
+    ================================================== -->
+    <div id="tf-blog" class="blog-post">
+       
+
+        <div id="blog-post"> <!-- fullwidth gray background -->
+            <div class="container" id=all><!-- container --> 
+                <div class="row" style="background:#337ab7;color:#ffffff;position:fixed;width:100%;top:25%;padding-left:5px;padding-right:5px;text-align:left;width:auto;display:none;z-index:1001;" id="detail"> 
+                    <div style="width:100%;text-align:center;color:yellow;"><h2>Thông tin đặt vé xe</h2></div>
+                    <div style="text-align:center;" id="loading"><img src="/Images/loading.gif" style="height:50px;width:50px;"/></div>
+                    <div style="width:100%;text-align:center;color:#ffd800;">Chuyến @ViewBag.from - @ViewBag.to</div>
+                    @*<div><b>Giờ chạy:</b> <span id="f15"></span><span id="f16"></span></div>*@
+                    <div style="border-bottom:1px solid #cecece;"><b>Tên nhà xe:</b> <span id="f13"></span></div>
+                    <div style="border-bottom:1px solid #cecece;"><b>Điểm đi:</b> <span id="f7"></span></div>
+                    <div style="border-bottom:1px solid #cecece;"><b>Điểm đến:</b> <span id="f8"></span></div>
+                    @*<div><b>Thời gian:</b> <span id="f9"></span></div>
+                    <div><b>Loại hình:</b> <span id="f4"></span></div>
+                    <div><b>Loại xe:</b> <span id="f11"></span></div>
+                    <div><b>Tiện ích:</b> <span id="f18"></span></div>*@
+                    <div style="border-bottom:1px solid #cecece;"><b>Giá vé:</b> <span id="f17"></span></div>
+                    <div style="border-bottom:1px solid #cecece;"><b>Ghi chú:</b> <span id="f19"></span></div>
+                    <div style="text-align:center;">ĐẶT XE GỌI NGAY <a href="tel:0966346393" style="font-size:20px;color:yellow;font-weight:bold;">0966.346.393</a> / <a href="tel:0914686220" style="font-size:20px;color:yellow;font-weight:bold;">0914.686.220</a></div>
+                    <div style="text-align:center;"><a href="#" style="text-decoration:underline;" onclick="$('#detail').hide();">Thoát</a></div>
+                </div>               
+                <div class="row" style="background:#cecece;display:block;padding-top:10px;display:none;" id="searchbox"> <!-- nested inner row -->
+									<div class="col-md-12" style="color:blue;float:left;">
+										<div style="float:left;"><input type=radio name=c1 checked>&nbsp;Xe khách&nbsp;<input type=radio name=c1>&nbsp;Xe taxi&nbsp;<input type=radio name=c1>&nbsp;Cho thuê xe&nbsp;</div>
+									</div>
+									<!-- Input your name -->
+									<div class="col-md-3">
+										<div class="form-group"> <!-- Your name input -->
+											<!--<input type="text" autocomplete="on" class="form-control" placeholder="Chọn tỉnh xuất phát" id="keyword" required data-validation-required-message="gõ từ cần tìm" onfocus="autosearch(event);"> -->
+											<select class="form-control" id="from">
+												<option  value="-1">Điểm khởi hành</option>
+                                                    <option value="Hà Nội">Hà Nội</option>
+                                                    <option value="Sài Gòn">Sài Gòn</option>
+                                                    <option value="Đà Nẵng">Đà Nẵng</option>
+                                                    @foreach (var item in ViewBag.cat1)
+                                                    {
+                                                        if (item.name.ToString().Contains("Hà Nội") || item.name.ToString().Contains("Sài Gòn") || item.name.ToString().Contains("Đà Nẵng"))
+                                                        {
+                                                            continue;
+                                                        }
+                                                        <option value="@Html.Raw(@item.name)">@Html.Raw(@item.name)</option>
+                                                    }
+                                             </select>
+											<p class="help-block text-danger"></p>
+										</div>
+									</div>
+									<!-- Input your email -->
+									<div class="col-md-3">
+										<div class="form-group"> <!-- Your email input -->
+											<select class="form-control" id="to">
+												<option  value="-1">Điểm đến</option>
+                                                <option value="Hà Nội">Hà Nội</option>
+                                                    <option value="Sài Gòn">Sài Gòn</option>
+                                                    <option value="Đà Nẵng">Đà Nẵng</option>
+                                                    @foreach (var item in ViewBag.cat2)
+                                                    {
+                                                        if (item.name.ToString().Contains("Hà Nội") || item.name.ToString().Contains("Sài Gòn") || item.name.ToString().Contains("Đà Nẵng"))
+                                                        {
+                                                            continue;
+                                                        }
+                                                    <option value="@Html.Raw(@item.name)">@Html.Raw(@item.name)</option>
+                                                }
+                                             </select>
+											<p class="help-block text-danger"></p>
+											<div class="map_canvas" style="display:none;"></div>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group"> <!-- Your email input -->
+											<select class="form-control" id="type">
+												<option selected value="">Loại hình xe</option>
+                                                @foreach (var item in ViewBag.typecat)
+                                                {
+                                                    <option value="@item.name">@item.name</option>
+                                                }
+                                             </select>
+										</div>
+									</div>
+									<!-- Input your Phone no. -->
+									<div class="col-md-2">
+										<div class="form-group"> <!-- Your email input -->
+											<button type="button" class="btn btn-primary" onclick="search();">Tìm Nhanh</button> <!-- Send button -->
+										</div>
+									</div>
+
+				</div><!-- end nested inner row -->
+                <div class="row" > <!-- row -->
+
+					<div class="col-md-12" style="margin-left:0px;background:#337ab7;z-index:2001;position:relative;float:left;" id="filterdiv"> 
+						<div class="row"> @Html.Raw(SearchFilter.Config.tags(allFilter))
+                                @if (allFilter != "" && allFilter != null)
+                                {<span style="cursor:pointer;" onclick="removeFilter('');" class="label label-default">Xóa bộ lọc X</span>}
+						</div>
+                        <div class="row" style="margin-top:15px;margin-bottom:10px;"><a href="#" onclick="showsearchbox();" style="color:yellow;">Thay đổi điểm đi - đến</a><a href="#" onclick="setSearch('@Html.Raw(@ViewBag.to)','@Html.Raw(@ViewBag.from)');" style="color:#ffffff;">&nbsp;&nbsp;&nbsp;<img src="/Images/back.png">&nbsp;&nbsp;&nbsp;Tới chiều ngược lại</a></div>
+					</div>
+					<div id="work-detail-two" class="col-md-12 gray-bg" style="padding:0 0 0 0;" > <!-- fullwidth gray background -->
+						<div class="container"><!-- container -->
+							<div class="row"> <!-- row -->
+								<table class="table filter-table table-noborder mb0" style="width:100%;">
+									<tr id="filterdiv2" style="width:100%;">
+										<td class="col-md-3 pl0" style="width:auto;">
+											<i class="fa fa-bus hidden-xs"></i>
+											
+											<button class="btn dropdown-toggle" type="button" data-toggle="dropdown">Hãng Xe
+											<span class="caret"></span></button>
+											<ul class="dropdown-menu" >
+                                                 <li><a href="#" onclick='setcat(13,"");'>Tất cả</a></li>
+                                              @foreach (var item in ViewBag.lf13)
+                                              {
+											      <li><a href="#" onclick='setcat(13,"@Html.Raw(@item.name)");'>@Html.Raw(@item.name)</a></li>
+                                              }
+											  
+											</ul>
+											
+										</td>
+										<td class="col-md-3 hidden-xs" style="width:auto;">
+											
+										
+											<button class="btn dropdown-toggle" type="button" data-toggle="dropdown">Nơi đi
+											<span class="caret"></span></button>
+											<ul class="dropdown-menu" >
+                                                <li><a href="#" onclick='setcat(7,"");'>Tất cả</a></li>
+											   @foreach (var item in ViewBag.lf7)
+              {
+											      <li><a href="#" onclick='setcat(7,"@Html.Raw(@item.name)");'>@Html.Raw(@item.name)</a></li>
+              }
+											  
+											</ul>
+										</td>
+										<td class="col-md-3 hidden-xs" style="width:auto;">
+											
+											
+											<button class="btn dropdown-toggle" type="button" data-toggle="dropdown">Nơi đến
+											<span class="caret"></span></button>
+											<ul class="dropdown-menu" >
+                                                <li><a href="#" onclick='setcat(8,"");'>Tất cả</a></li>
+											  @foreach (var item in ViewBag.lf8)
+             {
+											      <li><a href="#" onclick='setcat(8,"@Html.Raw(@item.name)");'>@Html.Raw(@item.name)</a></li>
+             }
+											  
+											</ul>
+										</td>
+										<td class="col-md-3 pl0" style="width:auto;">
+											
+											
+											<button class="btn dropdown-toggle" type="button" data-toggle="dropdown">Thời gian
+											<span class="caret"></span></button>
+											<ul class="dropdown-menu" >
+                                                 <li><a href="#" onclick='setcat(9,"");'>Tất cả</a></li>
+											  @foreach (var item in ViewBag.lf9)
+             {
+											      <li><a href="#" onclick='setcat(9,"@Html.Raw(@item.name)");'>@Html.Raw(@item.name)</a></li>
+             }
+											  
+											</ul>
+										</td>
+										<td class="col-md-3 hidden-xs" style="width:auto;">											
+											
+											<button class="btn dropdown-toggle" type="button" data-toggle="dropdown">Đón trả
+											<span class="caret"></span></button>
+											<ul class="dropdown-menu" >
+                                                <li><a href="#" onclick='setcat(10,"");'>Tất cả</a></li>
+											  @foreach (var item in ViewBag.lf10)
+             {
+											      <li><a href="#" onclick='setcat(10,"@Html.Raw(@item.name)");'>@Html.Raw(@item.name)</a></li>
+             }
+											 
+											</ul>
+										</td>
+										<td class="col-md-3 hidden-xs" style="width:auto;">											
+											
+											<button class="btn dropdown-toggle" type="button" data-toggle="dropdown">Loại xe
+											<span class="caret"></span></button>
+											<ul class="dropdown-menu" >
+                                                <li><a href="#" onclick='setcat(11,"");'>Tất cả</a></li>
+											  @foreach (var item in ViewBag.lf11)
+             {
+											      <li><a href="#" onclick='setcat(11,"@Html.Raw(@item.name)");'>@Html.Raw(@item.name)</a></li>
+             }
+											</ul>
+										</td>
+										<td class="col-md-3 pl0" style="width:auto;">
+											<!--<a id="fareFilter" class="mr10" >Giá vé</a> <i class="fa fa-sort-desc vt"></i>-->
+											<button class="btn dropdown-toggle" type="button" data-toggle="dropdown">Giá vé
+											<span class="caret"></span></button>
+											<ul class="dropdown-menu" >
+											  <li><a href="#" onclick="setorder(1);">Xếp giảm dần</a></li>
+											  <li><a href="#" onclick="setorder(0);">Xếp tăng dần</a></li>
+                                                <li><a href="#" onclick="setorder(-1);">Mặc định</a></li>
+											</ul>
+										</td>
+									</tr>
+                                    @foreach (var item in Model)
+                                    {
+									<tr style="width:100%;">
+										<td class="col-md-3 pl0" style="width:auto;max-width:190px;">
+											<b>@item.F13</b>
+                                            <p style="font-size:11px;font-style:italic;">@item.F18</p>  
+                                            @if (ViewBag.isMobile) { 
+                                                <p style="font-size:11px;font-style:oblique;">@item.F7 -> @item.F8</p>  
+                                            }                                          
+										</td>
+										<td class="col-md-3 hidden-xs" style="width:auto;">
+											@item.F7
+										</td>
+										<td class="col-md-3 hidden-xs" style="width:auto;">
+											@item.F8
+
+										</td>
+										<td class="col-md-3 pl0" style="width:auto;max-width:150px;text-wrap:none;">
+											@item.F9
+                                            @if (item.F16==""){
+                                            <p style="font-size:11px;font-style:italic;">@SearchFilter.Config.hourrun(@item.F15)</p>
+                                            }
+                                            <p style="font-size:11px;font-style:italic;">@item.F16</p>
+										</td>
+										<td class="col-md-3 hidden-xs" style="width:auto;">
+											@item.F10
+										</td>
+										<td class="col-md-3 hidden-xs" style="width:auto;max-width:190px;">
+											@item.F11
+                                            <p style="font-size:11px;font-style:italic;">@item.F19</p>
+										</td>
+										<td class="col-md-3 pl0" style="width:auto;">
+											@{int price = (int)item.F17 * 1000;}
+                                            <p>@String.Format("{0:#,##0}", price)</p>
+                                            <p>
+                                            @if (item.F4 != "Xe tư nhân trong bến")
+                                            {
+                                                
+											    <button class="btn btn-default" style="background-color: #337ab7;" onclick="book(@item.id);">Đặt xe</button>
+                                            }
+                                            else
+                                            {
+                                                if (ViewBag.isMobile == true)
+                                                {
+                                                    @Html.Raw(@SearchFilter.Config.mobilecall(item.F14))
+                                                }
+                                                else
+                                                {
+                                                    @Html.Raw(@SearchFilter.Config.call(item.F14))
+                                                }
+                                            }
+                                            </p>
+										</td>
+									</tr>
+                                    }									
+								</table>
+							</div>
+                            <div class="pagination" style="border-top:1px solid #808080;width:100%;">
+                                       Trang:
+                                        @for (int i = 1; i <= Model.PageCount; i++)
+                                        {
+                                            <a href="/home/list?from=@ViewBag.from&to=@ViewBag.to&type=@ViewBag.type&f13=@ViewBag.f13&f7=@ViewBag.f7&f8=@ViewBag.f8&f9=@ViewBag.f9&f10=@ViewBag.f10&f11=@ViewBag.f11&order=@ViewBag.order&pg=@i" style="cursor:pointer;">@i</a>
+                                        }
+                                     
+                            </div> <!-- end pagination -->
+						</div>
+					</div>
+                </div><!-- end row -->
+                      
+            </div><!-- end container -->
+			
+        </div> <!-- end fullwidth gray background -->
+    </div>
+    <script>
+    $("#from").val("@Html.Raw(@ViewBag.from)");
+    $("#to").val("@Html.Raw(@ViewBag.to)");
+    $("#type").val("@Html.Raw(@ViewBag.type)");
+    var from = "@Html.Raw(@ViewBag.from)";
+    var to = "@Html.Raw(@ViewBag.to)";
+    var type = "@Html.Raw(@ViewBag.type)";
+    var f7 = "@Html.Raw(@ViewBag.f7)";
+    var f8 = "@Html.Raw(@ViewBag.f8)";
+    var f9 = "@Html.Raw(@ViewBag.f9)";
+    var f10 = "@Html.Raw(@ViewBag.f10)";
+    var f11 = "@Html.Raw(@ViewBag.f11)";
+    var f13 = "@Html.Raw(@ViewBag.f13)";
+    var order = "@Html.Raw(@ViewBag.order)";
+    var pg = @ViewBag.pg;
+    function setcat(type,val) {
+        if (type == 7) {
+            f7 = val;
+        }
+        if (type == 8) {
+            f8 = val;
+        }
+        if (type == 9) {
+            f9 = val;
+        }
+        if (type == 10) {
+            f10 = val;
+        }
+        if (type == 11) {
+            f11 = val;
+        }
+        if (type == 13) {
+            f13 = val;
+        }
+        goto();
+    }
+    function setorder(type) {
+        if (type == 1) { order = "price"; } else
+        {if (type==0) { order = "";} else { order = "rank";}}
+        goto();
+    }
+    function goto() {
+        window.location.href = "/home/list/?from=" + from + "&to=" + to + "&type=" + type + "&f13=" + f13 + "&f7=" + f7 + "&f8=" + f8 + "&f9=" + f9 + "&f10=" + f10 + "&f11=" + f11 + "&order=" + order + "&pg=" + pg;
+    }
+    function search() {
+        var from = document.getElementById("from").value;
+        var to = document.getElementById("to").value;
+        var type = document.getElementById("type").value;
+        if (from == "-1") {
+            alert("Bạn chưa nhập điểm khởi hành!");
+            document.getElementById("from").focus();
+            return;
+        }
+        if (to == "-1") {
+            alert("Bạn chưa nhập điểm đến!");
+            document.getElementById("to").focus();
+            return;
+        }
+        window.location.href = "/home/list/?from=" + from + "&to=" + to + "&type=" + type;
+    }
+    function showsearchbox() {
+        if (document.getElementById("searchbox").style.display == "none")
+            $("#searchbox").show();
+        else
+            $("#searchbox").hide();
+
+    }
+    function book(id){
+        $("#loading").show();
+        $("#detail").show();
+        $.ajax({
+            url: "/Home/getDetail?id="+id,
+            cache: false
+        }).done(function( html ) {
+            var news = '{"news":' + html + '}';
+            //alert(news);
+            var json_parsed = $.parseJSON(news);
+            for (var i = 0; i < json_parsed.news.length; i++) {
+                var f7item = json_parsed.news[i].F7;
+                var f8item = json_parsed.news[i].F8;
+                var f9item = json_parsed.news[i].F9;
+                var f11item = json_parsed.news[i].F11;
+                var f13item = json_parsed.news[i].F13;
+                var f17item = json_parsed.news[i].F17*1000;
+                var f15item = json_parsed.news[i].F15;
+                var f16item = json_parsed.news[i].F16;
+                var f4item = json_parsed.news[i].F4;
+                $("#f7").html(f7item);
+                $("#f8").html(f8item);
+                $("#f9").html(f9item);
+                $("#f11").html(f11item);
+                $("#f15").html(f15item);
+                $("#f16").html(f16item);
+                $("#f17").html(f17item);
+                $("#f13").html(f13item);
+                $("#f4").html(f4item);
+                var f18item = json_parsed.news[i].F18;
+                var f19item = json_parsed.news[i].F19;
+                $("#f18").html(f18item);
+                $("#f19").html(f19item);
+                $("#loading").hide();
+            }
+
+        });
+    }
+    function removeFilter(key){
+        if (key===''){
+            type="";
+            f7="";
+            f8="";
+            f9="";
+            f10="";
+            f11="";
+            f13="";
+            goto();
+        }
+        if (type==key)
+        {
+            type="";
+            goto();
+        }
+        if (f7==key)
+        {
+            f7="";
+            goto();
+        }
+        if (f8==key)
+        {
+            f8="";
+            goto();
+        }
+        if (f9==key)
+        {
+            f9="";
+            goto();
+        }
+        if (f10==key)
+        {
+            f10="";
+            goto();
+        }
+        if (f11==key)
+        {
+            f11="";
+            goto();
+        }
+        if (f13==key)
+        {
+            f13="";
+            goto();
+        }
+    }
+    $(function(){
+        var _top = $(window).scrollTop();
+        var _direction;
+        $(window).scroll(function(){
+            //$("#filterdiv").css("position","fixed");
+            //$("#filterdiv").css("top","0");
+            //$("#filterdiv").css("position","fixed");
+            //$("#filterdiv").css("width","100%");
+            //$("#filterdiv").css("z-index","10011");
+            //$("#filterdiv").css("display","block");
+            //$("#filterdiv").css("top","0px");
+            //$("#filterdiv").css("float","left");
+            //$("#filterdiv").css("left","0px");
+            //$("#filterdiv2").css("position","fixed");
+            //$("#filterdiv2").css("z-index","10012");
+            //$("#filterdiv2").css("display","block");
+        });
+    });
+
+    $.ajax({
+        url: "/Home/Log?F2=@Html.Raw(@ViewBag.from)&F3=@Html.Raw(@ViewBag.to)",
+        cache: false
+    }).done(function( html ) {
+
+    });
+    function setSearch(from,to)
+    {
+            document.getElementById("from").value=from;
+            document.getElementById("to").value=to;
+            search();
+    }
+</script>

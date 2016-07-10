@@ -1,0 +1,113 @@
+﻿@{
+    ViewBag.Title = "Đặt xe khách toàn quốc giá rẻ nhất";
+}
+<!-- Home Section
+    ================================================== -->
+    <div id="tf-home">
+        <div class="overlay"> <!-- Overlay Color -->
+            <div class="container"> <!-- container -->
+                <div class="content-heading text-center"> <!-- Input Your Home Content Here -->
+                    <div class="row text-center"> <!-- contact form outer row with centered text-->
+						<h2>Đặt Xe Khách Cho Tất Cả 63 Tỉnh Thành</h2>
+						<div class="col-md-10 col-md-offset-1"> <!-- col 10 with offset 1 to centered -->
+							<form id="contact-form" class="form" name="sentMessage" novalidate> <!-- form wrapper -->
+
+								<div class="row" style="background:#cecece;display:block;padding-top:10px;"> <!-- nested inner row -->
+									@*<div class="col-md-12" style="color:blue;float:left;">
+										<div style="float:left;"><input type=radio name=c1 checked>&nbsp;Xe khách&nbsp;<input type=radio name=c1>&nbsp;Xe taxi&nbsp;<input type=radio name=c1>&nbsp;Cho thuê xe&nbsp;</div>
+									</div>*@
+									<!-- Input your name -->
+									<div class="col-md-3">
+										<div class="form-group"> <!-- Your name input -->
+											<!--<input type="text" autocomplete="on" class="form-control" placeholder="Chọn tỉnh xuất phát" id="keyword" required data-validation-required-message="gõ từ cần tìm" onfocus="autosearch(event);"> -->
+											<select class="form-control" id="from">
+												<option selected value="-1">Điểm khởi hành</option>
+                                                    <option value="Hà Nội">Hà Nội</option>
+                                                    <option value="Sài Gòn">Sài Gòn</option>
+                                                    <option value="Đà Nẵng">Đà Nẵng</option>
+                                                    @foreach(var item in ViewBag.cat1){
+                                                        if (item.name.ToString().Contains("Hà Nội") || item.name.ToString().Contains("Sài Gòn") || item.name.ToString().Contains("Đà Nẵng"))
+                                                        {
+                                                            continue;
+                                                        }
+                                                        <option value="@item.name">@item.name</option>
+                                                    }
+                                             </select>
+											<p class="help-block text-danger"></p>
+										</div>
+									</div>
+									<!-- Input your email -->
+									<div class="col-md-3">
+										<div class="form-group"> <!-- Your email input -->
+											<select class="form-control" id="to">
+												<option selected value="-1">Điểm đến</option>
+                                                <option value="Hà Nội">Hà Nội</option>
+                                                    <option value="Sài Gòn">Sài Gòn</option>
+                                                    <option value="Đà Nẵng">Đà Nẵng</option>
+                                                    @foreach(var item in ViewBag.cat2){
+                                                        if (item.name.ToString().Contains("Hà Nội") || item.name.ToString().Contains("Sài Gòn") || item.name.ToString().Contains("Đà Nẵng"))
+                                                        {
+                                                            continue;
+                                                        }
+                                                        <option value="@item.name">@item.name</option>
+                                                    }
+                                             </select>
+											<p class="help-block text-danger"></p>
+											<div class="map_canvas" style="display:none;"></div>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group"> <!-- Your email input -->
+											<select class="form-control" id="type">
+												<option selected value="">Loại hình xe</option>
+                                                @foreach(var item in ViewBag.type){
+                                                    <option value="@item.name">@item.name</option>
+                                                }
+                                             </select>
+										</div>
+									</div>
+									<!-- Input your Phone no. -->
+									<div class="col-md-2">
+										<div class="form-group"> <!-- Your email input -->
+											<button type="button" class="btn btn-primary" onclick="search();">Tìm Nhanh</button> <!-- Send button -->
+										</div>
+									</div>
+                                    <div class="col-md-12" style="color:blue;float:left;">
+                                        <p><b>Phổ biến:</b> @Html.Raw(ViewBag.popular)</p>
+                                    </div>
+								</div><!-- end nested inner row -->
+
+							</form><!-- end form wrapper -->
+						</div><!-- end col 10 with offset 1 to centered -->
+                        
+					</div> <!-- end contact form outer row with centered text-->
+                </div><!-- End Input Your Home Content Here -->
+            </div> <!-- end container -->
+        </div><!-- End Overlay Color -->
+    </div>
+<script>
+    document.getElementById("from").value = "@Html.Raw(@ViewBag.from)";
+    document.getElementById("to").value = "@Html.Raw(@ViewBag.to)";
+    function setSearch(from,to)
+    {
+        document.getElementById("from").value=from;
+        document.getElementById("to").value=to;
+        search();
+    }
+    function search() {
+        var from = document.getElementById("from").value;
+        var to = document.getElementById("to").value;
+        var type = document.getElementById("type").value;
+        if (from == "-1") {
+            alert("Bạn chưa nhập điểm khởi hành!");
+            document.getElementById("from").focus();
+            return;
+        }
+        if (to == "-1") {
+            alert("Bạn chưa nhập điểm đến!");
+            document.getElementById("to").focus();
+            return;
+        }
+        window.location.href = "/home/list/?from=" + from + "&to=" + to + "&type=" + type + "&order=rank";
+    }
+</script>

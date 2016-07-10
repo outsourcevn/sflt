@@ -1,0 +1,29 @@
+﻿@model SearchFilter.Models.list
+
+@{
+    ViewBag.Title = "Đặt vé xe khách "+Model.F2+"-"+Model.F3+", nhà xe "+Model.F13;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int price = (int)Model.F17 * 1000;
+                                            
+}
+<div id="tf-blog" class="blog-post">
+    <div id="blog-post"> <!-- fullwidth gray background -->
+            <div class="container" id=all><!-- container -->
+
+<div class="row" style="background:#337ab7;color:#ffffff;position:relative;width:100%;top:25%;padding-left:5px;padding-right:5px;text-align:left;width:auto;z-index:1001;" id="detail"> 
+                    <div style="width:100%;text-align:center;color:yellow;"><h2>@ViewBag.Title</h2></div>
+                    <div><b>Giờ chạy:</b> <span id="f15">@Model.F15</span><span id="f16">@Model.F16</span></div>
+                    <div style="border-bottom:1px solid #cecece;"><b>Tên nhà xe:</b> <span id="f13">@Model.F13</span></div>
+                    <div style="border-bottom:1px solid #cecece;"><b>Điểm đi:</b> <span id="f7">@Model.F7</span></div>
+                    <div style="border-bottom:1px solid #cecece;"><b>Điểm đến:</b> <span id="f8">@Model.F8</span></div>
+                    <div><b>Thời gian:</b> <span id="f9">@Model.F9</span></div>
+                    <div><b>Loại hình:</b> <span id="f4">@Model.F4</span></div>
+                    <div><b>Loại xe:</b> <span id="f11">@Model.F11</span></div>
+                    <div><b>Tiện ích:</b> <span id="f18">@Model.F18</span></div>
+                    <div style="border-bottom:1px solid #cecece;"><b>Giá vé:</b> <span id="f17">@String.Format("{0:#,##0}", price)</span></div>
+                    <div style="border-bottom:1px solid #cecece;"><b>Ghi chú:</b> <span id="f19">@Model.F19</span></div>
+                    <div style="text-align:center;">ĐẶT XE GỌI NGAY <a href="tel:0966346393" style="font-size:20px;color:yellow;font-weight:bold;">0966.346.393</a> / <a href="tel:0914686220" style="font-size:20px;color:yellow;font-weight:bold;">0914.686.220</a></div>
+                    
+                </div> 
+</div>
+        </div></div>

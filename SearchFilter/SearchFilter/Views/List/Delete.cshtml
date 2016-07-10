@@ -1,0 +1,16 @@
+﻿@model SearchFilter.Models.list
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="tf-blog" class="blog-post" style="width:100%;text-align:center;">
+<h3>Bạn có chắc chắn xóa nhà xe @Model.F13 đi từ @Model.F2 đến @Model.F3</h3>
+</div>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

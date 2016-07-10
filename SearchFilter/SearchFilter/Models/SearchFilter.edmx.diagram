@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="70e6b7d647e949cdb7235db88f36bb84" Name="Diagram1" ZoomLevel="78">
+        <EntityTypeShape EntityType="xe63Model.listprovince" Width="1.5" PointX="3.0867421604165539" PointY="30.7571081215316" />
+        <EntityTypeShape EntityType="xe63Model.list" Width="1.5" PointX="6.6707740252235794" PointY="6.9190697404179113" />
+        <EntityTypeShape EntityType="xe63Model.log" Width="1.5" PointX="0.75" PointY="0.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
