@@ -37,6 +37,19 @@
           <Property Name="F25" Type="ntext" />
           <Property Name="rank" Type="int" />
         </EntityType>
+        <EntityType Name="list_online">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="F2" Type="nvarchar" MaxLength="150" />
+          <Property Name="F3" Type="nvarchar" MaxLength="150" />
+          <Property Name="F4" Type="nvarchar" MaxLength="50" />
+          <Property Name="date_time" Type="datetime" />
+          <Property Name="lon" Type="float" />
+          <Property Name="lat" Type="float" />
+          <Property Name="geo" Type="geography" />
+        </EntityType>
         <EntityType Name="listprovince">
           <Key>
             <PropertyRef Name="id" />
@@ -55,6 +68,7 @@
         </EntityType>
         <EntityContainer Name="xe63ModelStoreContainer">
           <EntitySet Name="list" EntityType="Self.list" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="list_online" EntityType="Self.list_online" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="listprovince" EntityType="Self.listprovince" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="log" EntityType="Self.log" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
@@ -66,6 +80,7 @@
           <EntitySet Name="listprovinces" EntityType="xe63Model.listprovince" />
           <EntitySet Name="lists" EntityType="xe63Model.list" />
           <EntitySet Name="logs" EntityType="xe63Model.log" />
+          <EntitySet Name="list_online" EntityType="xe63Model.list_online" />
         </EntityContainer>
         <EntityType Name="listprovince">
           <Key>
@@ -114,6 +129,19 @@
           <Property Name="F2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="F3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="total" Type="Int32" />
+        </EntityType>
+        <EntityType Name="list_online">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="F2" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="F3" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="F4" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="date_time" Type="DateTime" Precision="3" />
+          <Property Name="lon" Type="Double" />
+          <Property Name="lat" Type="Double" />
+          <Property Name="geo" Type="Geography" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -166,6 +194,20 @@
             <EntityTypeMapping TypeName="xe63Model.log">
               <MappingFragment StoreEntitySet="log">
                 <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="F3" ColumnName="F3" />
+                <ScalarProperty Name="F2" ColumnName="F2" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="list_online">
+            <EntityTypeMapping TypeName="xe63Model.list_online">
+              <MappingFragment StoreEntitySet="list_online">
+                <ScalarProperty Name="geo" ColumnName="geo" />
+                <ScalarProperty Name="lat" ColumnName="lat" />
+                <ScalarProperty Name="lon" ColumnName="lon" />
+                <ScalarProperty Name="date_time" ColumnName="date_time" />
+                <ScalarProperty Name="F4" ColumnName="F4" />
                 <ScalarProperty Name="F3" ColumnName="F3" />
                 <ScalarProperty Name="F2" ColumnName="F2" />
                 <ScalarProperty Name="id" ColumnName="id" />

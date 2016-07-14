@@ -234,6 +234,9 @@
     <Compile Include="Models\listprovince.cs">
       <DependentUpon>SearchFilter.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\list_online.cs">
+      <DependentUpon>SearchFilter.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\log.cs">
       <DependentUpon>SearchFilter.tt</DependentUpon>
     </Compile>

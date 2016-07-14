@@ -8,6 +8,7 @@
         <EntityTypeShape EntityType="xe63Model.listprovince" Width="1.5" PointX="3.0867421604165539" PointY="30.7571081215316" />
         <EntityTypeShape EntityType="xe63Model.list" Width="1.5" PointX="6.6707740252235794" PointY="6.9190697404179113" />
         <EntityTypeShape EntityType="xe63Model.log" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="xe63Model.list_online" Width="1.5" PointX="3.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

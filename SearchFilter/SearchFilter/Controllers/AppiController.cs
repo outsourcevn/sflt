@@ -30,5 +30,26 @@ namespace SearchFilter.Controllers
             p = p.OrderBy(o => o.rank);
             return JsonConvert.SerializeObject(p.ToList());
         }
+        public class glol
+        {
+            public string F2 { get; set; }
+            public string F3 { get; set; }
+            public string F4 { get; set; }
+            public DateTime datetime { get; set; }
+            public double D { get; set; }
+        }
+        public string getlistonline(string from, string to, string type, double lon, double lat)
+        {
+            string query = "select F2,F3,F4,GETDATE() as datetime,ACOS(SIN(PI()*" + lat + "/180.0)*SIN(PI()*lat/180.0)+COS(PI()*" + lat + "/180.0)*COS(PI()*lat/180.0)*COS(PI()*lon/180.0-PI()*" + lon + "/180.0))*6371 As D from list_online where (1=1) ";
+            query += " and (F2=N'" + from + "') ";
+            query += " and (F3=N'" + to + "') ";
+            if (type != null && type != "")
+            {
+                query += " and (F4=N'" + type + "') ";
+            }
+            query += " order by d";
+            var p = db.Database.SqlQuery<glol>(query);
+            return JsonConvert.SerializeObject(p.ToList());
+        }
     }
 }
