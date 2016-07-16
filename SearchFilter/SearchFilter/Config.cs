@@ -38,7 +38,7 @@ namespace SearchFilter
             string[] arr=val.Split(';');
             string rs="";
             for(int i=0;i<arr.Length;i++){
-                rs += "<p><a href=\"tel:" + arr[i] + "\" class=\"btn btn-default\" style=\"background-color: #337ab7;color:yellow;padding-left:3px;padding-right:3px;font-size:10px;\">" + arr[i] + "</a></p>";
+                rs += "<p><a href=\"tel:" + arr[i] + "\" class=\"btn btn-default\" style=\"background-color: #337ab7;color:yellow;padding-left:15px;padding-bottom:5px;padding-top:5px;padding-right:15px;font-size:10px;\">" + arr[i] + "</a></p>";
             }
             return rs;
         }
@@ -57,7 +57,7 @@ namespace SearchFilter
             string rs = "";
             for (int i = 0; i < arr.Length; i++)
             {
-                rs += "<p><span style=\"background-color:#337ab7;color:yellow;padding-left:3px;padding-right:3px;\" class=\"glyphicon glyphicon-phone\">" + arr[i] + "</span></p>";
+                rs += "<p><span style=\"background-color:#337ab7;color:yellow;padding-left:15px;padding-bottom:5px;padding-top:5px;padding-right:15px;\" class=\"glyphicon glyphicon-phone\" >" + arr[i] + "</span></p>";
             }
             return rs;
         }

@@ -1158,3 +1158,8 @@ ul.meta-tags li:last-child:after { content: ' ' }
     background: url('/Images/top.png') no-repeat;
     background-color: red;
 }
+.standardcss{
+    position:relative;
+    display:block;
+    width:100%;
+}

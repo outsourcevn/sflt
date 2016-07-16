@@ -59,6 +59,26 @@
 	#itemsWorkTwo .box .hover-text i.fa {
 	    top: 0%;
 	}
+    #hotlinephone1{
+        float: left;
+        position: relative;
+        display: block;
+        width: 100%;
+    }
+    #hotlinephone2{
+        float: left;
+        position: relative;
+        display: block;
+        width: 100%;
+        margin-top:5px;
+    }
+    #hotlinephone3{
+       float: left;
+        position: relative;
+        display: block;
+        width: 100%;
+        margin-top:5px;
+    }
 }
 @media (max-width: 768px) {
 	#tf-home.slider .content-heading {
@@ -70,6 +90,18 @@
 	}
 	.slider .content-heading p.lead { margin-bottom: 20px; }
 	.slider .carousel-indicators { bottom: 30px; }
+    .hotlinephone1{
+        float: left;
+        position: relative;
+        display: block;
+        width: 100%;
+    }
+    .hotlinephone2{
+        float: left;
+        position: relative;
+        display: block;
+        width: 100%;
+    }
 }
 @media (max-width: 603px) { 
 	.slider a.goto-btn { display: none;}
@@ -91,6 +123,18 @@
     p.lead { display: none;}
     .slider .carousel-indicators { bottom: 0px; }
     .ipad-wrapper .app-wrap {left: 3%;}
+    .hotlinephone1{
+        float: left;
+        position: relative;
+        display: block;
+        width: 100%;
+    }
+    .hotlinephone2{
+        float: left;
+        position: relative;
+        display: block;
+        width: 100%;
+    }
 }
 @media (max-width: 360px) { 
 	#tf-services,
@@ -128,6 +172,18 @@
 	    display: inline-block;
 	}
 	.blog .post-meta {min-height: 55px;}
+    #hotlinephone1{
+        float: left;
+        position: relative;
+        display: block;
+        width: 100%;
+    }
+    #hotlinephone2{
+        float: left;
+        position: relative;
+        display: block;
+        width: 100%;
+    }
 }
 @media (max-width: 320px) { 
 	.post-wrap .post .media-body p {display: none;}
@@ -140,4 +196,16 @@
 	.post-tab .nav-tabs > li > a {
 	    padding: 5px 10px;
 	}
+   #hotlinephone1{
+        float: left;
+        position: relative;
+        display: block;
+        width: 100%;
+    }
+    #hotlinephone2{
+        float: left;
+        position: relative;
+        display: block;
+        width: 100%;
+    }
 }
