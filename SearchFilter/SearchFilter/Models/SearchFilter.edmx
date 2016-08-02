@@ -45,10 +45,12 @@
           <Property Name="F2" Type="nvarchar" MaxLength="150" />
           <Property Name="F3" Type="nvarchar" MaxLength="150" />
           <Property Name="F4" Type="nvarchar" MaxLength="50" />
+          <Property Name="F13" Type="nvarchar" MaxLength="150" />
           <Property Name="date_time" Type="datetime" />
           <Property Name="lon" Type="float" />
           <Property Name="lat" Type="float" />
           <Property Name="geo" Type="geography" />
+          <Property Name="phone_driver" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="listprovince">
           <Key>
@@ -66,11 +68,25 @@
           <Property Name="F3" Type="nvarchar" MaxLength="50" />
           <Property Name="total" Type="int" />
         </EntityType>
+        <EntityType Name="ticket">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="name" Type="nvarchar" MaxLength="150" />
+          <Property Name="note" Type="ntext" />
+          <Property Name="token" Type="nvarchar" MaxLength="150" />
+          <Property Name="uiid" Type="nvarchar" MaxLength="150" />
+          <Property Name="idnhaxe" Type="int" />
+          <Property Name="regid" Type="nvarchar" MaxLength="550" />
+        </EntityType>
         <EntityContainer Name="xe63ModelStoreContainer">
           <EntitySet Name="list" EntityType="Self.list" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="list_online" EntityType="Self.list_online" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="listprovince" EntityType="Self.listprovince" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="log" EntityType="Self.log" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ticket" EntityType="Self.ticket" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -81,6 +97,7 @@
           <EntitySet Name="lists" EntityType="xe63Model.list" />
           <EntitySet Name="logs" EntityType="xe63Model.log" />
           <EntitySet Name="list_online" EntityType="xe63Model.list_online" />
+          <EntitySet Name="tickets" EntityType="xe63Model.ticket" />
         </EntityContainer>
         <EntityType Name="listprovince">
           <Key>
@@ -142,6 +159,21 @@
           <Property Name="lon" Type="Double" />
           <Property Name="lat" Type="Double" />
           <Property Name="geo" Type="Geography" />
+          <Property Name="F13" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="phone_driver" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ticket">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="token" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="uiid" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="idnhaxe" Type="Int32" />
+          <Property Name="regid" Type="String" MaxLength="550" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -203,6 +235,8 @@
           <EntitySetMapping Name="list_online">
             <EntityTypeMapping TypeName="xe63Model.list_online">
               <MappingFragment StoreEntitySet="list_online">
+                <ScalarProperty Name="phone_driver" ColumnName="phone_driver" />
+                <ScalarProperty Name="F13" ColumnName="F13" />
                 <ScalarProperty Name="geo" ColumnName="geo" />
                 <ScalarProperty Name="lat" ColumnName="lat" />
                 <ScalarProperty Name="lon" ColumnName="lon" />
@@ -210,6 +244,20 @@
                 <ScalarProperty Name="F4" ColumnName="F4" />
                 <ScalarProperty Name="F3" ColumnName="F3" />
                 <ScalarProperty Name="F2" ColumnName="F2" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tickets">
+            <EntityTypeMapping TypeName="xe63Model.ticket">
+              <MappingFragment StoreEntitySet="ticket">
+                <ScalarProperty Name="regid" ColumnName="regid" />
+                <ScalarProperty Name="idnhaxe" ColumnName="idnhaxe" />
+                <ScalarProperty Name="uiid" ColumnName="uiid" />
+                <ScalarProperty Name="token" ColumnName="token" />
+                <ScalarProperty Name="note" ColumnName="note" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

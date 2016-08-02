@@ -9,6 +9,7 @@
         <EntityTypeShape EntityType="xe63Model.list" Width="1.5" PointX="6.6707740252235794" PointY="6.9190697404179113" />
         <EntityTypeShape EntityType="xe63Model.log" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="xe63Model.list_online" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="xe63Model.ticket" Width="1.5" PointX="0.75" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
