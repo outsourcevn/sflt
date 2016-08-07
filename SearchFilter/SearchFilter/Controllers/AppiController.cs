@@ -139,6 +139,63 @@ namespace SearchFilter.Controllers
                 return ex.ToString();
             }
         }
+        public string getlistnhaxe() {
+            var p = (from q in db.lists select new { id=q.id,F7 = q.F7, F8 = q.F8, F13 = q.F13 }).OrderBy(o => o.F13).ThenBy(o => o.F7).ThenBy(o => o.F8);
+            return JsonConvert.SerializeObject(p.ToList());
+        }
+        //public string getFromTo(int type)
+        //{
+        //    if ()
+        //}
+        public string register(int id,string password,string phone,string bienso,string	from,string	to){
+            try{
+                driver dv = new driver();
+                dv.id_course = id;
+                dv.password = password;
+                dv.phone = phone;
+                dv.bienso = bienso;
+                dv.from = from;
+                dv.to = to;
+                db.drivers.Add(dv);
+                db.SaveChanges();
+                return "1";
+            }
+            catch (Exception ex)
+            {
+                return "0";
+            }
+        }
+        public string login(string bienso,string password)
+        {
+             try{
+                 bool f = db.drivers.Any(o=>o.bienso==bienso && o.password==password);
+                 if (f) return "1"; else return "0";
+             }
+             catch (Exception ex)
+             {
+                 return "0";
+             }
+        }
+        public string locale(string from, string to, string type, float lon, float lat, string token, string phone,string name)
+        {
+            try
+            {
+                list_online lo = new list_online();
+                lo.F2 = from;
+                lo.F3 = to;
+                lo.F4=type;
+                lo.F13 = name;
+                lo.phone_driver = phone;
+                lo.lon = lon;
+                lo.lat = lat;
+                lo.geo = Config.CreatePoint(lat, lon);
+                return "1";
+            }
+            catch (Exception ex)
+            {
+                return "0";
+            }
+        }
        
     }
 }

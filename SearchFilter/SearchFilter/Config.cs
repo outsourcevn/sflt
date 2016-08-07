@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Spatial;
 using System.Linq;
 using System.Web;
 
@@ -60,6 +61,13 @@ namespace SearchFilter
                 rs += "<p><span style=\"background-color:#337ab7;color:yellow;padding-left:15px;padding-bottom:5px;padding-top:5px;padding-right:15px;\" class=\"glyphicon glyphicon-phone\" >" + arr[i] + "</span></p>";
             }
             return rs;
+        }
+        public static DbGeography CreatePoint(double? latitude, double? longitude)
+        {
+            if (latitude == null || longitude == null) return null;
+            latitude = (double)latitude;
+            longitude = (double)longitude;
+            return DbGeography.FromText(String.Format("POINT({1} {0})", latitude, longitude));
         }
         public static void setCookie(string field, string value)
         {
