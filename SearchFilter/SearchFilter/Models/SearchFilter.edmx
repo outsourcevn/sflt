@@ -5,6 +5,19 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="xe63Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="driver">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_course" Type="int" />
+          <Property Name="password" Type="nvarchar" MaxLength="50" />
+          <Property Name="phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="bienso" Type="nvarchar" MaxLength="50" />
+          <Property Name="from" Type="nvarchar" MaxLength="50" />
+          <Property Name="to" Type="nvarchar" MaxLength="50" />
+          <Property Name="regid" Type="nvarchar" MaxLength="505" />
+        </EntityType>
         <EntityType Name="list">
           <Key>
             <PropertyRef Name="id" />
@@ -82,6 +95,7 @@
           <Property Name="regid" Type="nvarchar" MaxLength="550" />
         </EntityType>
         <EntityContainer Name="xe63ModelStoreContainer">
+          <EntitySet Name="driver" EntityType="Self.driver" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="list" EntityType="Self.list" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="list_online" EntityType="Self.list_online" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="listprovince" EntityType="Self.listprovince" Schema="dbo" store:Type="Tables" />
@@ -98,6 +112,7 @@
           <EntitySet Name="logs" EntityType="xe63Model.log" />
           <EntitySet Name="list_online" EntityType="xe63Model.list_online" />
           <EntitySet Name="tickets" EntityType="xe63Model.ticket" />
+          <EntitySet Name="drivers" EntityType="xe63Model.driver" />
         </EntityContainer>
         <EntityType Name="listprovince">
           <Key>
@@ -174,6 +189,19 @@
           <Property Name="uiid" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="idnhaxe" Type="Int32" />
           <Property Name="regid" Type="String" MaxLength="550" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="driver">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_course" Type="Int32" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="bienso" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="from" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="to" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="regid" Type="String" MaxLength="505" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -258,6 +286,20 @@
                 <ScalarProperty Name="note" ColumnName="note" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="drivers">
+            <EntityTypeMapping TypeName="xe63Model.driver">
+              <MappingFragment StoreEntitySet="driver">
+                <ScalarProperty Name="regid" ColumnName="regid" />
+                <ScalarProperty Name="to" ColumnName="to" />
+                <ScalarProperty Name="from" ColumnName="from" />
+                <ScalarProperty Name="bienso" ColumnName="bienso" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="id_course" ColumnName="id_course" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -228,6 +228,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\driver.cs">
+      <DependentUpon>SearchFilter.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\list.cs">
       <DependentUpon>SearchFilter.tt</DependentUpon>
     </Compile>

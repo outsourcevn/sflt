@@ -139,6 +139,77 @@ namespace SearchFilter.Controllers
                 return ex.ToString();
             }
         }
+        public string accept(int id,string uiid, string type)
+        {
+            try
+            {
+                string result = "";
+                string[] arrRegid = db.tickets.Where(c => c.uiid == uiid).Select(c => c.regid).ToArray();
+                //đây chính là Sender ID: (copy paste từ Google developer nhé)
+                string SENDER_ID = "465163493878";
+                //lấy nội dung thông báo
+                //string value = value;
+                WebRequest tRequest;
+                //thiết lập GCM send
+                tRequest = WebRequest.Create("https://fcm.googleapis.com/fcm/send");
+                tRequest.Method = "POST";
+                tRequest.UseDefaultCredentials = true;
+
+                tRequest.PreAuthenticate = true;
+
+                tRequest.Credentials = CredentialCache.DefaultNetworkCredentials;
+
+                //định dạng JSON
+                tRequest.ContentType = "application/json";
+                //tRequest.ContentType = " application/x-www-form-urlencoded;charset=UTF-8";
+                tRequest.Headers.Add(string.Format("Authorization: key={0}", "AIzaSyCYoQ0Y9X5pquWIaY12IFtbJpqaDI_plzc"));
+                tRequest.Headers.Add(string.Format("Sender: id={0}", SENDER_ID));
+
+                string RegArr = string.Empty;
+
+                RegArr = string.Join("\",\"", arrRegid);
+                //Post Data có định dạng JSON như sau:
+                /*
+                *  { "collapse_key": "score_update",     "time_to_live": 108,       "delay_while_idle": true,
+                "data": {
+                "score": "223/3",
+                "time": "14:13.2252"
+                },
+                "registration_ids":["dh4dhdfh", "dfhjj8", "gjgj", "fdhfdjgfj", "đfjdfj25", "dhdfdj38"]
+                }
+                 *            
+                */
+                string value = id + "," + type;
+                //string postData = "{ \"registration_ids\": [ \"" + uiid + "\" ],\"data\": {\"phone\":\"" + phone + "\",\"name\":\"" + name + "\",\"note\":\"" + note + "\",\"token\":\"" + token + "\",\"uiid\":\"" + uiid + "\",\"id\":\"" + id + "\"}}";
+                //string postData = "{ \"id\": [ \"" + id + "\" ],\"data\": {\"phone\": \"" + phone + "\",\"name\":\"" + name + "\"},\"note\":\"" + note + "\"},\"token\":\"" + token + "\"},\"uiid\":\"" + uiid + "\"}}";//phone	name	note	token	uiid	id(id tuyen xe nao)
+                string postData = "{ \"registration_ids\": [ \"" + RegArr + "\" ],\"data\": {\"message\": \"" + value + "\",\"collapse_key\":\"" + value + "\"}}";
+                //Console.WriteLine(postData);
+                Byte[] byteArray = Encoding.UTF8.GetBytes(postData);
+                tRequest.ContentLength = byteArray.Length;
+
+                Stream dataStream = tRequest.GetRequestStream();
+                dataStream.Write(byteArray, 0, byteArray.Length);
+                dataStream.Close();
+
+                WebResponse tResponse = tRequest.GetResponse();
+
+                dataStream = tResponse.GetResponseStream();
+
+                StreamReader tReader = new StreamReader(dataStream);
+
+                String sResponseFromServer = tReader.ReadToEnd();
+
+                result = sResponseFromServer; //Lấy thông báo kết quả từ GCM server.
+                tReader.Close();
+                dataStream.Close();
+                tResponse.Close();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return ex.ToString();
+            }
+        }
         public string getlistnhaxe() {
             var p = (from q in db.lists select new { id=q.id,F7 = q.F7, F8 = q.F8, F13 = q.F13 }).OrderBy(o => o.F13).ThenBy(o => o.F7).ThenBy(o => o.F8);
             return JsonConvert.SerializeObject(p.ToList());
@@ -147,7 +218,7 @@ namespace SearchFilter.Controllers
         //{
         //    if ()
         //}
-        public string register(int id,string password,string phone,string bienso,string	from,string	to){
+        public string register(int id,string password,string phone,string bienso,string	from,string	to,string regid){
             try{
                 driver dv = new driver();
                 dv.id_course = id;
@@ -156,6 +227,7 @@ namespace SearchFilter.Controllers
                 dv.bienso = bienso;
                 dv.from = from;
                 dv.to = to;
+                dv.regid = regid;
                 db.drivers.Add(dv);
                 db.SaveChanges();
                 return "1";
@@ -165,10 +237,10 @@ namespace SearchFilter.Controllers
                 return "0";
             }
         }
-        public string login(string bienso,string password)
+        public string login(string bienso,string password,string regid)
         {
              try{
-                 bool f = db.drivers.Any(o=>o.bienso==bienso && o.password==password);
+                 bool f = db.drivers.Any(o=>o.bienso==bienso && o.password==password && o.regid==regid);
                  if (f) return "1"; else return "0";
              }
              catch (Exception ex)
@@ -176,7 +248,7 @@ namespace SearchFilter.Controllers
                  return "0";
              }
         }
-        public string locale(string from, string to, string type, float lon, float lat, string token, string phone,string name)
+        public string locale(string from, string to, string type, float lon, float lat, string phone,string name)
         {
             try
             {

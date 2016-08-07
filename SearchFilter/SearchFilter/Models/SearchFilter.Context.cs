@@ -30,5 +30,6 @@ namespace SearchFilter.Models
         public DbSet<log> logs { get; set; }
         public DbSet<list_online> list_online { get; set; }
         public DbSet<ticket> tickets { get; set; }
+        public DbSet<driver> drivers { get; set; }
     }
 }
