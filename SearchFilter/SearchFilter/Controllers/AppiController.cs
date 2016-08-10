@@ -24,13 +24,38 @@ namespace SearchFilter.Controllers
         }
         public string getlist(string from, string to,string type)
         {
-            var p = db.lists.Where(o => o.F2.Contains(from)).Where(o => o.F3.Contains(to)).Take(1000);
+            var p1 = (from p in db.lists
+                      join q in db.drivers on p.id equals q.id_course
+                     select new
+                     {
+                         F2 = p.F2,
+                         F3 = p.F3,
+                         F4 = p.F4,
+                         F5 = p.F5,
+                         F6 = p.F6,
+                         F7 = p.F7,
+                         F8 = p.F8,
+                         F9 = p.F9,
+                         F10 = p.F10,
+                         F11 = p.F11,
+                         F12 = p.F12,
+                         F13 = p.F13,
+                         F14 = p.F14,
+                         F15 = p.F15,
+                         F16 = p.F16,
+                         F17 = p.F17,
+                         F18=p.F18,
+                         F19=p.F19,
+                         rank = p.rank,
+                         idtaixe = q.id,
+                     }).Where(o => o.F2.Contains(from)).Where(o => o.F3.Contains(to));
+                //db.lists.Where(o => o.F2.Contains(from)).Where(o => o.F3.Contains(to)).Take(1000);
             if (type != null && type != "")
             {
-                p = p.Where(o => o.F4.Contains(type));
+                p1 = p1.Where(o => o.F4.Contains(type));
             }
-            p = p.OrderBy(o => o.rank);
-            return JsonConvert.SerializeObject(p.ToList());
+            p1 = p1.OrderBy(o => o.rank);
+            return JsonConvert.SerializeObject(p1.ToList());
         }
         public class glol
         {
@@ -40,6 +65,17 @@ namespace SearchFilter.Controllers
             public DateTime datetime { get; set; }
             public double D { get; set; }
         }
+        public class item
+        {
+            public string name { get; set; }
+        }
+        public string getfromto(int type) { 
+            string field="F2";
+            if (type == 2) field = "F3";
+            var p = db.Database.SqlQuery<item>("select " + field + " as name from list group by " + field + " order by name");
+            return JsonConvert.SerializeObject(p.ToList());
+        }
+
         public string getlistonline(string from, string to, string type, double lon, double lat)
         {
             string query = "select F2,F3,F4,GETDATE() as datetime,ACOS(SIN(PI()*" + lat + "/180.0)*SIN(PI()*lat/180.0)+COS(PI()*" + lat + "/180.0)*COS(PI()*lat/180.0)*COS(PI()*lon/180.0-PI()*" + lon + "/180.0))*6371 As D from list_online where (1=1) ";
@@ -53,27 +89,29 @@ namespace SearchFilter.Controllers
             var p = db.Database.SqlQuery<glol>(query);
             return JsonConvert.SerializeObject(p.ToList());
         }
-        public string ticket(string phone, string name, string note, string uiid, int id,string regid) {
+        public string ticket(string phone, string name, string note, string uiid, string regid,int idtaixe) {
             try
             {
+                driver taixe = db.drivers.Find(idtaixe);
                 ticket tk = new ticket();
-                tk.idnhaxe = id;
+                tk.idtaixe = idtaixe;
                 tk.name = name;
                 tk.name = note;
                 tk.phone = phone;
                 tk.uiid = uiid;
-                tk.regid = regid;
+                tk.regidkhach = regid;
+                tk.regidtaixe = taixe.regid;
                 db.tickets.Add(tk);
                 db.SaveChanges();
-                return sendGoogle(phone, name, note,uiid, id, regid);
+                return sendGoogle(phone, name, note, uiid, idtaixe, regid);
             }catch(Exception ex)
             { return ex.ToString(); }
         }
-        public string sendGoogle(string phone, string name, string note, string uiid, int id, string regid)
+        public string sendGoogle(string phone, string name, string note, string uiid, int idtaixe, string regid)
         {
             try { 
                 string result = "";
-                string[] arrRegid = db.tickets.Where(c => c.uiid == uiid).Select(c => c.regid).ToArray();
+                string[] arrRegid = db.tickets.Where(c => c.uiid == uiid).Select(c => c.regidtaixe).ToArray();
                 //đây chính là Sender ID: (copy paste từ Google developer nhé)
                 string SENDER_ID = "465163493878";
                 //lấy nội dung thông báo
@@ -108,7 +146,7 @@ namespace SearchFilter.Controllers
                 }
                  *            
                 */
-                string value = phone + "," + name + "," + note + "," + uiid + "," + id;
+                string value = phone + "," + name + "," + note + "," + uiid + "," + idtaixe;
                 //string postData = "{ \"registration_ids\": [ \"" + uiid + "\" ],\"data\": {\"phone\":\"" + phone + "\",\"name\":\"" + name + "\",\"note\":\"" + note + "\",\"token\":\"" + token + "\",\"uiid\":\"" + uiid + "\",\"id\":\"" + id + "\"}}";
                 //string postData = "{ \"id\": [ \"" + id + "\" ],\"data\": {\"phone\": \"" + phone + "\",\"name\":\"" + name + "\"},\"note\":\"" + note + "\"},\"token\":\"" + token + "\"},\"uiid\":\"" + uiid + "\"}}";//phone	name	note	token	uiid	id(id tuyen xe nao)
                 string postData = "{ \"registration_ids\": [ \"" + RegArr + "\" ],\"data\": {\"message\": \"" + value + "\",\"collapse_key\":\"" + value + "\"}}";
@@ -144,7 +182,7 @@ namespace SearchFilter.Controllers
             try
             {
                 string result = "";
-                string[] arrRegid = db.tickets.Where(c => c.uiid == uiid).Select(c => c.regid).ToArray();
+                string[] arrRegid = db.tickets.Where(c => c.uiid == uiid).Select(c => c.regidkhach).ToArray();
                 //đây chính là Sender ID: (copy paste từ Google developer nhé)
                 string SENDER_ID = "465163493878";
                 //lấy nội dung thông báo

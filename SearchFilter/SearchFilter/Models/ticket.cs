@@ -20,7 +20,8 @@ namespace SearchFilter.Models
         public string note { get; set; }
         public string token { get; set; }
         public string uiid { get; set; }
-        public Nullable<int> idnhaxe { get; set; }
-        public string regid { get; set; }
+        public Nullable<int> idtaixe { get; set; }
+        public string regidkhach { get; set; }
+        public string regidtaixe { get; set; }
     }
 }
