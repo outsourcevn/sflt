@@ -278,8 +278,8 @@ namespace SearchFilter.Controllers
         public string login(string bienso,string password,string regid)
         {
              try{
-                 bool f = db.drivers.Any(o=>o.bienso==bienso && o.password==password && o.regid==regid);
-                 if (f) return "1"; else return "0";
+                 var f = db.drivers.Where(o=>o.bienso==bienso && o.password==password && o.regid==regid);
+                 if (f!=null) return JsonConvert.SerializeObject(f.ToList()); else return "0";
              }
              catch (Exception ex)
              {
