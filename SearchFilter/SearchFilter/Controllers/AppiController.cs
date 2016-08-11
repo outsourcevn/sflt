@@ -249,7 +249,7 @@ namespace SearchFilter.Controllers
             }
         }
         public string getlistnhaxe() {
-            var p = (from q in db.lists select new { id=q.id,F7 = q.F7, F8 = q.F8, F13 = q.F13 }).OrderBy(o => o.F13).ThenBy(o => o.F7).ThenBy(o => o.F8);
+            var p = (from q in db.lists select new { id=q.id,F7 = q.F7, F8 = q.F8, F13 = q.F13,F4=q.F4 }).OrderBy(o => o.F13).ThenBy(o => o.F7).ThenBy(o => o.F8);
             return JsonConvert.SerializeObject(p.ToList());
         }
         //public string getFromTo(int type)
@@ -286,7 +286,7 @@ namespace SearchFilter.Controllers
                  return "0";
              }
         }
-        public string locale(string from, string to, string type, float lon, float lat, string phone,string name)
+        public string locate(string from, string to, string type, float lon, float lat, string phone,string name)
         {
             try
             {
