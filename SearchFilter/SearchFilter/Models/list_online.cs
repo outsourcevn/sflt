@@ -18,11 +18,14 @@ namespace SearchFilter.Models
         public string F2 { get; set; }
         public string F3 { get; set; }
         public string F4 { get; set; }
+        public string F13 { get; set; }
         public Nullable<System.DateTime> date_time { get; set; }
         public Nullable<double> lon { get; set; }
         public Nullable<double> lat { get; set; }
         public System.Data.Spatial.DbGeography geo { get; set; }
-        public string F13 { get; set; }
         public string phone_driver { get; set; }
+        public string bienso { get; set; }
+        public string start { get; set; }
+        public string end2 { get; set; }
     }
 }

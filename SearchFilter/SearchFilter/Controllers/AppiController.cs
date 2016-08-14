@@ -48,6 +48,7 @@ namespace SearchFilter.Controllers
                          F19=p.F19,
                          rank = p.rank,
                          idtaixe = q.id,
+                         last_online=q.last_online,
                      }).Where(o => o.F2.Contains(from)).Where(o => o.F3.Contains(to));
                 //db.lists.Where(o => o.F2.Contains(from)).Where(o => o.F3.Contains(to)).Take(1000);
             if (type != null && type != "")
@@ -62,7 +63,12 @@ namespace SearchFilter.Controllers
             public string F2 { get; set; }
             public string F3 { get; set; }
             public string F4 { get; set; }
+            public string F13 { get; set; }
             public DateTime datetime { get; set; }
+            public string phone_driver { get; set; }
+            public string bienso { get; set; }
+            public string start { get; set; }
+            public string end2 { get; set; }
             public double D { get; set; }
         }
         public class item
@@ -78,7 +84,7 @@ namespace SearchFilter.Controllers
 
         public string getlistonline(string from, string to, string type, double lon, double lat)
         {
-            string query = "select F2,F3,F4,GETDATE() as datetime,ACOS(SIN(PI()*" + lat + "/180.0)*SIN(PI()*lat/180.0)+COS(PI()*" + lat + "/180.0)*COS(PI()*lat/180.0)*COS(PI()*lon/180.0-PI()*" + lon + "/180.0))*6371 As D from list_online where (1=1) ";
+            string query = "select F2,F3,F4,F13,phone_driver,bienso,start,end2,GETDATE() as datetime,ACOS(SIN(PI()*" + lat + "/180.0)*SIN(PI()*lat/180.0)+COS(PI()*" + lat + "/180.0)*COS(PI()*lat/180.0)*COS(PI()*lon/180.0-PI()*" + lon + "/180.0))*6371 As D from list_online where (1=1) ";
             query += " and (F2=N'" + from + "') ";
             query += " and (F3=N'" + to + "') ";
             if (type != null && type != "")
@@ -249,7 +255,7 @@ namespace SearchFilter.Controllers
             }
         }
         public string getlistnhaxe() {
-            var p = (from q in db.lists select new { id=q.id,F7 = q.F7, F8 = q.F8, F13 = q.F13,F4=q.F4 }).OrderBy(o => o.F13).ThenBy(o => o.F7).ThenBy(o => o.F8);
+            var p = (from q in db.lists select new { id=q.id,F2=q.F2,F3=q.F3,F7 = q.F7, F8 = q.F8, F13 = q.F13,F4=q.F4 }).OrderBy(o => o.F13).ThenBy(o => o.F7).ThenBy(o => o.F8);
             return JsonConvert.SerializeObject(p.ToList());
         }
         //public string getFromTo(int type)
@@ -286,19 +292,27 @@ namespace SearchFilter.Controllers
                  return "0";
              }
         }
-        public string locate(string from, string to, string type, float lon, float lat, string phone,string name)
+        public string locate(string from, string to, string type, float lon, float lat, string phone,string name,string bienso,string start,string end,int idtaixe)
         {
             try
             {
+                db.Database.ExecuteSqlCommand("delete from list_online where F2=N'"+from+"' and F3=N'"+to+"' and F4=N'"+type+"' and phone_driver=N'"+phone+"'");
+                db.Database.ExecuteSqlCommand("update driver set last_online=getdate() where id=" + idtaixe);
                 list_online lo = new list_online();
                 lo.F2 = from;
                 lo.F3 = to;
                 lo.F4=type;
                 lo.F13 = name;
+                lo.date_time = DateTime.Now;
                 lo.phone_driver = phone;
                 lo.lon = lon;
                 lo.lat = lat;
                 lo.geo = Config.CreatePoint(lat, lon);
+                lo.bienso = bienso;
+                lo.start = start;
+                lo.end2 = end;
+                db.list_online.Add(lo);
+                db.SaveChanges();
                 return "1";
             }
             catch (Exception ex)

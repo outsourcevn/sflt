@@ -28,8 +28,8 @@ namespace SearchFilter.Models
         public DbSet<listprovince> listprovinces { get; set; }
         public DbSet<list> lists { get; set; }
         public DbSet<log> logs { get; set; }
-        public DbSet<list_online> list_online { get; set; }
-        public DbSet<driver> drivers { get; set; }
         public DbSet<ticket> tickets { get; set; }
+        public DbSet<driver> drivers { get; set; }
+        public DbSet<list_online> list_online { get; set; }
     }
 }
