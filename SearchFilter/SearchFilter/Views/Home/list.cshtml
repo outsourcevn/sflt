@@ -250,7 +250,8 @@
 										</td>
 										<td class="col-md-3 pl0" style="width:auto;max-width:150px;text-wrap:none;">
 											@item.F9
-                                            @if (item.F16==""){
+                                            @if (item.F16 == "" || item.F16 == null)
+                                            {
                                             <p style="font-size:11px;font-style:italic;">@SearchFilter.Config.hourrun(@item.F15)</p>
                                             }
                                             <p style="font-size:11px;font-style:italic;">@item.F16</p>
@@ -405,6 +406,16 @@
                 var f15item = json_parsed.news[i].F15;
                 var f16item = json_parsed.news[i].F16;
                 var f4item = json_parsed.news[i].F4;
+                var f14item = json_parsed.news[i].F14;
+                var arf14;
+                if (f14item!=null && f14item!=""){
+                    arf14=f14item.split(";"); 
+                    $("#hotlinephone1").html(arf14[0]);
+                    $("#hotlinephone1").attr("href","tel:"+arf14[0]);
+                    if (arf14.length>=2) {$("#hotlinephone2").html(arf14[1]);
+                        $("#hotlinephone2").attr("href","tel:"+arf14[1]);
+                    }
+                }
                 $("#f7").html(f7item);
                 $("#f8").html(f8item);
                 $("#f9").html(f9item);
@@ -418,6 +429,8 @@
                 var f19item = json_parsed.news[i].F19;
                 $("#f18").html(f18item);
                 $("#f19").html(f19item);
+                
+                
                 $("#loading").hide();
             }
 

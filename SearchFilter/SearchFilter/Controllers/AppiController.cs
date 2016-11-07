@@ -24,7 +24,9 @@ namespace SearchFilter.Controllers
         }
         public string getlist(string from, string to,string type)
         {
+            string sfrom=from;
             var p1 = (from p in db.lists
+                      where (p.F2.Contains(sfrom) && p.F3.Contains(to)) || (p.F3.Contains(sfrom) && p.F2.Contains(to))
                       join q in db.drivers on p.id equals q.id_course
                      select new
                      {
@@ -49,7 +51,7 @@ namespace SearchFilter.Controllers
                          rank = p.rank,
                          idtaixe = q.id,
                          last_online=q.last_online,
-                     }).Where(o => o.F2.Contains(from)).Where(o => o.F3.Contains(to));
+                     });//.Where(o => (o.F2.Contains(from) && o.F3.Contains(to)) || (o.F3.Contains(from) && o.F2.Contains(to)))
                 //db.lists.Where(o => o.F2.Contains(from)).Where(o => o.F3.Contains(to)).Take(1000);
             if (type != null && type != "")
             {
@@ -84,9 +86,9 @@ namespace SearchFilter.Controllers
 
         public string getlistonline(string from, string to, string type, double lon, double lat)
         {
-            string query = "select F2,F3,F4,F13,phone_driver,bienso,start,end2,GETDATE() as datetime,ACOS(SIN(PI()*" + lat + "/180.0)*SIN(PI()*lat/180.0)+COS(PI()*" + lat + "/180.0)*COS(PI()*lat/180.0)*COS(PI()*lon/180.0-PI()*" + lon + "/180.0))*6371 As D from list_online where (1=1) ";
-            query += " and (F2=N'" + from + "') ";
-            query += " and (F3=N'" + to + "') ";
+            string query = "select F2,F3,F4,F13,phone_driver,bienso,start,end2,GETDATE() as datetime,ACOS(SIN(PI()*" + lat + "/180.0)*SIN(PI()*lat/180.0)+COS(PI()*" + lat + "/180.0)*COS(PI()*lat/180.0)*COS(PI()*lon/180.0-PI()*" + lon + "/180.0))*6371 As D from list_online where ";
+            query += " ((F2=N'" + from + "' and F3=N'" + to + "') ";
+            query += " or  (F2=N'" + to + "' and F3=N'" + from + "')) ";
             if (type != null && type != "")
             {
                 query += " and (F4=N'" + type + "') ";
@@ -274,11 +276,55 @@ namespace SearchFilter.Controllers
                 dv.regid = regid;
                 db.drivers.Add(dv);
                 db.SaveChanges();
-                return "1";
+                return dv.id.ToString();
             }
             catch (Exception ex)
             {
                 return "0";
+            }
+        }
+        public string newnhaxe(string f2,string f3,string f4,string f7,string f8,string f9,string f10,string f11,string f13,string f14,int f17,string f18) {
+            try {
+                if (f2 == null || f2 == "" || f3 == null || f3 == "" || f4 == null || f4 == "" || f7 == null || f7 == "" || f8 == null || f8 == "" || f9 == null || f9 == "" || f10 == null || f10 == "") return "0";
+                if (f11 == null || f11 == "" || f13 == null || f13 == "" || f14 == null || f14 == "" || f17 == null  || f18 == null || f18 == "") return "0";
+                int maxid = db.lists.Max(o => o.id)+1;
+                list l=new list();
+                l.F2=f2;
+                l.F3=f3;
+                l.F4=f4;
+                l.F7=f7;
+                l.F8=f8;
+                l.F9=f9;
+                l.F10=f10;
+                l.F11=f11;
+                l.F13=f13;
+                l.F14=f14;
+                l.F17=f17;
+                l.F18=f18;
+                l.rank=maxid+1;
+                db.lists.Add(l);
+                db.SaveChanges();
+                return "1";
+            }catch(Exception ex){
+                return "0";
+            }
+        }
+        public partial class typegroup
+        {
+
+            public string name { get; set; }
+        }
+        public string getauto(string field)
+        {
+            try
+            {
+                string query = "select distinct " + field + " as name from list group by " + field + " order by " + field;
+                var p = db.Database.SqlQuery<typegroup>(query);
+                return JsonConvert.SerializeObject(p.ToList());
+            }
+            catch (Exception ex)
+            {
+                return null;
             }
         }
         public string login(string bienso,string password,string regid)

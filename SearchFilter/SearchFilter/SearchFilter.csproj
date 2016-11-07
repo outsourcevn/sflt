@@ -581,6 +581,8 @@
     <Content Include="Views\List\Delete.cshtml" />
     <Content Include="Views\Home\Detail.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Home\Logout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

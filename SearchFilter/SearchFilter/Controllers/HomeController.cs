@@ -169,8 +169,32 @@ namespace SearchFilter.Controllers
             return View();
         }
         public ActionResult Add() {
+            if (Config.getCookie("logged") == "") return RedirectToAction("Login", "Home");
             return View();
         }
+        public ActionResult Login()
+        {
+
+            return View();
+        }
+        public ActionResult Logout()
+        {
+            if (Request.Cookies["logged"] != null)
+            {
+                Response.Cookies["logged"].Expires = DateTime.Now.AddDays(-1);
+            }
+            Session.Abandon();
+            return View();
+        }
+        public string CheckLogin(string name,string pass)
+        {
+            if (name=="admin" && pass=="1") {
+                Config.setCookie("logged", "1");
+                return "1";
+            }
+            return "0";
+        }
+       
         public string getList() {
             var p = (from q in db.lists select q).OrderByDescending(o => o.id).ToList().Take(10);
             return JsonConvert.SerializeObject(p);

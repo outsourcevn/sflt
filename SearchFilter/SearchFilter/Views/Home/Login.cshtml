@@ -1,0 +1,50 @@
+﻿@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <div style="width:100%;">
+        <h1 style="margin-left:24%;">Đăng Nhập Xe63.Vn</h1>
+
+    </div>
+    <h2 style="margin-left:34%;">Đăng nhập hệ thống</h2>
+    <h3 style="margin-left:34%;">@ViewBag.message</h3>
+    <form class="clearfix mt50" role="form" method="post" action="/Admin/CheckLogin" name="contactform" id="contactform">
+        <div class="row">
+            <div class="form-group" style="width:80%;margin-left:4%;">
+                <label for="name" accesskey="U"><span class="required">*</span> User</label>
+                <input name="name" type="text" id="name" class="form-control" value="" />
+            </div>
+            <div class="form-group" style="width:80%;margin-left:4%;">
+                <label for="email" accesskey="E"><span class="required">*</span> Password</label>
+                <input name="pass" type="password" id="pass" value="" class="form-control" />
+            </div>
+            <div class="form-group" style="width:80%;margin-left:4%;">
+                <button type="button" class="btn btn-info" onclick="Login();">Login</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    function Login() {
+        var formdata = new FormData(); //FormData object
+        var name = document.getElementById("name").value;
+        var pass = document.getElementById("pass").value;
+        formdata.append("name", name);
+        formdata.append("pass", pass);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/Home/CheckLogin');
+        xhr.send(formdata);
+        var content = "";
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                if (xhr.responseText == 0) {
+                    alert("Sai user hoặc mật khẩu!");
+                } else {
+                    window.location.href = "/Home/Add";
+                }
+            }
+        }
+    }
+</script>
