@@ -389,6 +389,8 @@
     function book(id){
         $("#loading").show();
         $("#detail").show();
+        $("#hotlinephone1").hide();
+        $("#hotlinephone2").hide();
         $.ajax({
             url: "/Home/getDetail?id="+id,
             cache: false
@@ -412,8 +414,11 @@
                     arf14=f14item.split(";"); 
                     $("#hotlinephone1").html(arf14[0]);
                     $("#hotlinephone1").attr("href","tel:"+arf14[0]);
-                    if (arf14.length>=2) {$("#hotlinephone2").html(arf14[1]);
+                    $("#hotlinephone1").show();
+                    if (arf14.length>=2) {
+                        $("#hotlinephone2").html(arf14[1]);
                         $("#hotlinephone2").attr("href","tel:"+arf14[1]);
+                        $("#hotlinephone2").show();
                     }
                 }
                 $("#f7").html(f7item);
