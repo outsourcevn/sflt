@@ -44,13 +44,18 @@ namespace SearchFilter
             return rs;
         }
         public static string hourrun(string val) {
-            string[] arr = val.Split(';');
-            string rs = "";
-            for (int i = 0; i < arr.Length; i++)
-            {
-                rs += arr[i]+" ";
-            }
-            return rs;
+            try { 
+                    string[] arr = val.Split(';');
+                    string rs = "";
+                    for (int i = 0; i < arr.Length; i++)
+                    {
+                        rs += arr[i]+" ";
+                    }
+                    return rs;
+                }catch(Exception ex){
+                    return "";
+                }
+            
         }
         public static string call(string val)
         {
